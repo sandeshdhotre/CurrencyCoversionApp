@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: currency-conversion-service
+ labels:
+  app: currency-conversion-service
+spec:
+ containers:
+ - name: currency-conversion-service
+   image: sandeshdhotre/currencyconversionservice:latest
+   ports:
+    - name: monitoringport
+      containerPort: 9100

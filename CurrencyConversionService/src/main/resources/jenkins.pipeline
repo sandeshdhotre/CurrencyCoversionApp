@@ -1,0 +1,33 @@
+pipeline {
+   agent any
+
+   tools {
+      maven "M3"
+   }
+
+   stages {
+      stage('Build') {
+         steps {
+            // Get some code from a GitHub repository
+            git 'https://github.com/sandeshdhotre/monitoringservice.git'
+
+            // Run Maven on a Unix agent.
+            sh "mvn clean install"
+         }
+      }
+      stage('BuildImage') {
+         steps {
+            // Run Docker Command to Build Image.
+            sh "docker build -t sandeshdhotre/currencyconversionservice -f ./src/main/resources/Dockerfile ."
+         }
+      }
+      stage('PushImage') {
+         steps {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
+			usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]){
+			sh "docker login -u ${USERNAME} -p ${PASSWORD}"}
+            sh "docker push sandeshdhotre/CurrencyConversionService"
+         }
+      }      
+   }
+}
