@@ -9,7 +9,10 @@ pipeline {
       stage('Build') {
          steps {
             // Get some code from a GitHub repository
-            git 'https://github.com/sandeshdhotre/monitoringservice.git'
+            git 'https://github.com/sandeshdhotre/CurrencyCoversionApp.git'
+           
+           //Change Directory to CurrencyExchangeService
+           cd CurrencyExchangeService
 
             // Run Maven on a Unix agent.
             sh "mvn clean install"
@@ -17,8 +20,12 @@ pipeline {
       }
       stage('BuildImage') {
          steps {
+			
+			//Change Directory to CurrencyExchangeService         
+         	cd CurrencyExchangeService
+         	
             // Run Docker Command to Build Image.
-            sh "docker build -t sandeshdhotre/currencyconversionservice -f ./src/main/resources/Dockerfile ."
+            sh "docker build -t sandeshdhotre/currencyexchangeservice -f ./src/main/resources/Dockerfile ."
          }
       }
       stage('PushImage') {
@@ -26,7 +33,7 @@ pipeline {
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
 			usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]){
 			sh "docker login -u ${USERNAME} -p ${PASSWORD}"}
-            sh "docker push sandeshdhotre/CurrencyConversionService"
+            sh "docker push sandeshdhotre/currencyexchangeservice"
          }
       }      
    }

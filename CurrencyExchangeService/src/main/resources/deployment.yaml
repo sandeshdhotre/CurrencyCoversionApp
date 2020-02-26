@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: currency-conversion-service-deployment
+ name: currency-exchange-service-deployment
  labels:
-  app: currency-conversion-service-deployment
+  app: currency-exchange-service-deployment
 spec:
  replicas: 1
  selector:
   matchLabels:
-   app: currency-conversion-service
+   app: currency-exchange-service
  template:
   metadata:
    labels:
-    app: currency-conversion-service
+    app: currency-exchange-service
   spec:
    containers:
-   - name: currency-conversion-service
-     image: sandeshdhotre/currencyconversionservice
+   - name: currency-exchange-service
+     image: sandeshdhotre/currencyexchangeservice
      ports:
      - name: mport
        containerPort: 9100

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
- name: currency-conversion-service
+ name: currency-exchange-service
  labels:
-  app: currency-conversion-service
+  app: currency-exchange-service
 spec:
  ports:
  - port: 9100
    protocol: TCP
  selector:
-  app: currency-conversion-service
+  app: currency-exchange-service
  type: NodePort
